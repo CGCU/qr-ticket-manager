@@ -38,7 +38,7 @@ if(isset($_POST['sub'])) {
     <meta name="author" content="">
     <link rel="icon" href="../../favicon.ico">
     <!-- Bootstrap core CSS -->
-    <link href="../bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
     <style type="text/css">
         body {
@@ -105,9 +105,9 @@ if(isset($_POST['sub'])) {
 
 
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-<script src="../js/jquery.min.js"></script>
+<script src="js/jquery.min.js"></script>
 
 <!-- Bootstrap: Include all compiled plugins (below), or include individual files as needed -->
-<script src="../bootstrap/js/bootstrap.min.js"></script>
+<script src="bootstrap/js/bootstrap.min.js"></script>
 
 </html>
