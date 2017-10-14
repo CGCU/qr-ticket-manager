@@ -6,12 +6,11 @@
  * Time: 00:38
  */
 
-    //require("config.php");
+    require 'utils.php';
+
     session_start();
-    if(!$_SESSION['loggedIn']) {
-        header("Location: login.php");
-        die("Redirecting to login.php");
-    }
+    redirect_if_not_logged_in($_SESSION);
+
 ?>
 
 <html>
