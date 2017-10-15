@@ -22,7 +22,7 @@ if(isset($_POST['sub'])) {
         header('LOCATION:index.php');
         die();
     } else {
-        $err = 'Your username or password is incorrect. Nice try RCSU.';
+        $err = 'Your username or password is incorrect. Please try again!';
     }
 }
 ?>
