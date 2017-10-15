@@ -51,7 +51,7 @@ session_start();
 
 <body>
 
-<?php echo_navbar(); ?>
+<?php echo__home_navbar(); ?>
 
 <!-- FOOTER -->
 <footer>

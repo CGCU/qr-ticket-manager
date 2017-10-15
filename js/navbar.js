@@ -8,7 +8,7 @@
  * use alongside navbar css
  */
 
-//TODO: check ==
+//TODO: check == vs === etc here (PHP is great)
 
 /** Auto activate **/
 autoactivate = function(){
@@ -31,14 +31,13 @@ autoactivate = function(){
         var navhref = navbarAnchor.attr("href");
 
         //Check against
-        if (filename == navhref || (navhref == "index.html" && filename == "")){
+        if (filename == navhref || (navhref == "index.php" && filename == "")){
 
           navbarItem.addClass("active");
           navbarAnchor.html(navbarAnchor.html() + '<span class="sr-only"> (current)</span>');
         }
       });
 
-    responsiveNavbar();
 };
 
 
