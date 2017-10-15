@@ -82,7 +82,7 @@ $stmt->execute();
 $result = $stmt->get_result();
 
 while ($row = $result->fetch_assoc()) {
-    echo '<tr>';
+    echo '<tr onclick="window.document.location=\'#\';">';
     echo '<td>' . $row['name'] . '</td>';
     echo '<td>' . $row['date'] . '</td>';
     echo '</tr>';
