@@ -41,6 +41,8 @@ if(isset($_POST['sub'])) {
         exit();
     }
 
+    //TODO: SQL INJECTION STOP
+
     /* Query finds if username is in db */
     $query = "SELECT * FROM qr_users WHERE username = '" . $username . "'";
 
