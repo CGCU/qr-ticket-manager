@@ -12,3 +12,18 @@ function redirect_if_not_logged_in($session) {
         die("Redirecting to login.php");
     }
 }
+
+/* Connection will need closing after!!
+function create_mysqli_obj() {
+    // Load databse config info
+    $db_ini = parse_ini_file('not-public/database.ini');
+    $mysqli = new mysqli($db_ini['server_name'],
+        $db_ini['db_user'],
+        $db_ini['db_password'],
+        $db_ini['db_name']
+    );
+    // Delete database config info
+    unset($db_ini);
+    // Return mysql obj
+    return $mysqli;
+}*/
