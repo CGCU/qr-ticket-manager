@@ -19,10 +19,7 @@ if(isset($_POST['sub'])) {
     $username = $_POST['username'];
     $password = $_POST['password'];
 
-
     /* Open DB Connection */
-
-    //$mysqli = create_mysqli_obj();
 
     /* Load databse config info */
     $db_ini = parse_ini_file('not-public/database.ini');
