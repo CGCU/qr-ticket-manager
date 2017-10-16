@@ -8,7 +8,7 @@
 
 function redirect_if_not_logged_in($session) {
     if(!$session['loggedIn']) {
-        header("Location: login.php");
+        header("Location: /qr/login.php");
         die("Redirecting to login.php");
     }
 }

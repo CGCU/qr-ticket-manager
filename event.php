@@ -2,6 +2,11 @@
 
 include 'utils/utils.php';
 
+session_start();
+var_dump($_SESSION);
+redirect_if_not_logged_in($_SESSION);
+
+
 if (isset($_GET['params'])) {
     $params = explode("/", $_GET['params']);
 
@@ -17,7 +22,11 @@ if (isset($_GET['params'])) {
 //        die();
 //    }
 
-    var_dump($params);
+    if (strcasecmp($params[1], 'on-the-night') === 0) {
+        //include 'on-the-night.php';
+    }
+
+    //var_dump($params);
 
 } else {
     send404();
