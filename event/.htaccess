@@ -1,0 +1,3 @@
+Options +FollowSymLinks
+RewriteEngine On
+RewriteRule ^(.*)$ ../event.php?params=$1 [L,NC,NE,QSA]

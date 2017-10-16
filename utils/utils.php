@@ -13,6 +13,11 @@ function redirect_if_not_logged_in($session) {
     }
 }
 
+function send404() {
+    http_response_code(404);
+    die();
+}
+
 /* Connection will need closing after!!
 function create_mysqli_obj() {
     // Load databse config info
