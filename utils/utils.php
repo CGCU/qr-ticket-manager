@@ -13,7 +13,7 @@ function redirect_if_not_logged_in($session) {
     }
 }
 
-function send404() {
+function send404thendie() {
     http_response_code(404);
     die();
 }
