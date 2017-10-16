@@ -47,48 +47,50 @@ redirect_if_not_logged_in($_SESSION);
         </thead>
 
         <tbody>
+            <?php
+            /* Open DB Connection */
 
-<?php
-/* Open DB Connection */
+            /* Load databse config info */
+            $db_ini = parse_ini_file('not-public/database.ini');
+            $mysqli = new mysqli($db_ini['server_name'],
+            $db_ini['db_user'],
+            $db_ini['db_password'],
+            $db_ini['db_name']
+            );
+            /* Delete database config info */
+            unset($db_ini);
 
-/* Load databse config info */
-$db_ini = parse_ini_file('not-public/database.ini');
-$mysqli = new mysqli($db_ini['server_name'],
-$db_ini['db_user'],
-$db_ini['db_password'],
-$db_ini['db_name']
-);
-/* Delete database config info */
-unset($db_ini);
+            /* check connection */
+            if (mysqli_connect_errno()) {
+            printf("Database connection failed: %s\n", mysqli_connect_error());
+            printf("Please email guilds@imperial.ac.uk!\n");
+            exit();
+            }
 
-/* check connection */
-if (mysqli_connect_errno()) {
-printf("Database connection failed: %s\n", mysqli_connect_error());
-printf("Please email guilds@imperial.ac.uk!\n");
-exit();
-}
+            /* Query for all events by the user */
+            $username = $_SESSION['username'];
+            $query = "SELECT name, date FROM qr_events WHERE owner_username = '" . $username . "'";
 
-/* Query for all events by the user */
-$username = $_SESSION['username'];
-$query = "SELECT name, date FROM qr_events WHERE owner_username = '" . $username . "'";
+            /* prepare sql statement */
+            $stmt = $mysqli->prepare($query);
 
-/* prepare sql statement */
-$stmt = $mysqli->prepare($query);
+            /* execute prepared statement */
+            $stmt->execute();
 
-/* execute prepared statement */
-$stmt->execute();
+            /* get result obj */
+            $result = $stmt->get_result();
 
-/* get result obj */
-$result = $stmt->get_result();
+            while ($row = $result->fetch_assoc()) {
+                echo '<tr onclick="window.document.location=\'#\';">';
+                echo '<td>' . $row['name'] . '</td>';
+                echo '<td>' . $row['date'] . '</td>';
+                echo '</tr>';
+            }
 
-while ($row = $result->fetch_assoc()) {
-    echo '<tr onclick="window.document.location=\'#\';">';
-    echo '<td>' . $row['name'] . '</td>';
-    echo '<td>' . $row['date'] . '</td>';
-    echo '</tr>';
-}
+            $stmt->close();
+            $mysqli->close();
 
-?>
+            ?>
             </tbody>
         </table>
     </div>
