@@ -13,7 +13,8 @@
 /** Auto activate **/
 autoactivate = function(){
   var url = window.location.pathname;
-  var filename = url.substring(url.lastIndexOf('/')+1);
+  var filename = url.substring(url.lastIndexOf('/') + 1);
+  var filenameWithoutExtension = filename.substring(0, filename.lastIndexOf('.'));
 
     var navItems = $(".navbar-autoactivate li");
 
@@ -21,7 +22,7 @@ autoactivate = function(){
     navItems.each(function(idx, li) {
         var navbarItem = $(li);
         navbarItem.find('a').each(function() {
-          if (filename == this.href ){
+          if (filename == this.href || filenameWithoutExtension == this.href){
             navbarItem.addClass("active");
           }
         });
