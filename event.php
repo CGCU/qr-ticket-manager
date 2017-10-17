@@ -16,6 +16,7 @@ if (isset($_GET['params'])) {
     }
 
     //TODO: check what happens if params[0] is not a number, and 404 it
+    //TODO: check own the event before you show it/let the user do any actions (security url manipulation)
     /* define event_id variable that can be seen from within any of the later 'include's */
     $event_id = (int)$params[0];
 
@@ -59,6 +60,7 @@ if (isset($_GET['params'])) {
 
     $stmt->close();
     unset($stmt);
+    //$mysqli->close();
     /* END Find event name and Date */
 
     if (strcasecmp($params[1], 'on-the-night') === 0) {
@@ -77,9 +79,7 @@ if (isset($_GET['params'])) {
         include 'send-tickets.php';
     }
 
-    //var_dump($params);
-
-    /* Close here so db connection can be used in 'include's */
+    /* Close db connection here so can be used in includes */
     $mysqli->close();
 
 } else {

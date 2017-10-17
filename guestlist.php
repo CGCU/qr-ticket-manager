@@ -37,43 +37,59 @@
     <div class="">
         <table class="table table-striped">
             <colgroup>
-                <col class="col-md-8">
-                <col class="col-md-4">
+                <col class="col-md-1">
+                <col class="col-md-1">
+                <col class="col-md-1">
+                <col class="col-md-1">
+                <col class="col-md-3">
+                <col class="col-md-3">
+                <col class="col-md-1">
+                <col class="col-md-1">
             </colgroup>
             <thead>
             <tr>
-                <th>Event Name</th>
-                <th>Event Date</th>
+                <th>CID</th>
+                <th>Login</th>
+                <th>First Name</th>
+                <th>Surname</th>
+                <th>Email</th>
+                <th>Product</th>
+                <th>Price</th>
+                <th>Quantity</th>
             </tr>
             </thead>
 
             <tbody>
 
-              <?php
-//            /* Query for all events by the user */
-//            $username = $_SESSION['username'];
-//            $query = "SELECT name, date FROM qr_events WHERE owner_username = '" . $username . "'";
-//
-//            /* prepare sql statement */
-//            $stmt = $mysqli->prepare($query);
-//
-//            /* execute prepared statement */
-//            $stmt->execute();
-//
-//            /* get result obj */
-//            $result = $stmt->get_result();
-//
-//            while ($row = $result->fetch_assoc()) {
-//                echo '<tr>';
-//                echo '<td>' . $row['name'] . '</td>';
-//                echo '<td>' . $row['date'] . '</td>';
-//                echo '</tr>';
-//            }
-//
-//            $stmt->close();
-              //unset($stmt);
-//
-//            ?>
+            <?php
+            /* Query for all attendees matching the event */
+            $query = "SELECT cid, login, first_name, surname, email, product_name, price, quantity_purchased FROM qr_attendee WHERE event_id = " . (string)$event_id;
+
+            /* prepare sql statement */
+            $stmt = $mysqli->prepare($query);
+
+            /* execute prepared statement */
+            $stmt->execute();
+
+            /* get result obj */
+            $result = $stmt->get_result();
+
+            while ($row = $result->fetch_assoc()) {
+                echo '<tr>';
+                echo '<td>' . $row['cid'] . '</td>';
+                echo '<td>' . $row['login'] . '</td>';
+                echo '<td>' . $row['first_name'] . '</td>';
+                echo '<td>' . $row['surname'] . '</td>';
+                echo '<td>' . $row['email'] . '</td>';
+                echo '<td>' . $row['product_name'] . '</td>';
+                echo '<td>' . $row['price'] . '</td>';
+                echo '<td>' . $row['quantity'] . '</td>';
+                echo '</tr>';
+            }
+
+            $stmt->close();
+            unset($stmt);
+            ?>
             </tbody>
         </table>
     </div>
