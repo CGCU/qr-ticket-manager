@@ -83,7 +83,7 @@
                 echo '<td>' . $row['email'] . '</td>';
                 echo '<td>' . $row['product_name'] . '</td>';
                 echo '<td>' . $row['price'] . '</td>';
-                echo '<td>' . $row['quantity'] . '</td>';
+                echo '<td>' . $row['quantity_purchased'] . '</td>';
                 echo '</tr>';
             }
 
