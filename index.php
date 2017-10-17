@@ -69,7 +69,7 @@ redirect_if_not_logged_in($_SESSION);
 
             /* Query for all events by the user */
             $username = $_SESSION['username'];
-            $query = "SELECT name, date FROM qr_events WHERE owner_username = '" . $username . "'";
+            $query = "SELECT id, name, date FROM qr_events WHERE owner_username = '" . $username . "'";
 
             /* prepare sql statement */
             $stmt = $mysqli->prepare($query);
@@ -81,7 +81,7 @@ redirect_if_not_logged_in($_SESSION);
             $result = $stmt->get_result();
 
             while ($row = $result->fetch_assoc()) {
-                echo '<tr onclick="window.document.location=\'#\';">';
+                echo '<tr onclick="window.document.location=\'' . 'event/' . $row['id'] . '/guestlist' . '\';">';
                 echo '<td>' . $row['name'] . '</td>';
                 echo '<td>' . $row['date'] . '</td>';
                 echo '</tr>';
