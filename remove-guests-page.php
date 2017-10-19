@@ -22,17 +22,14 @@
 
 <body>
 
-<?php echo_navbar(); ?>
+<?php echo_navbar($event_id); ?>
 
 <div class="container well white-bkg" style="margin-top: 60px; position: relative">
 
-    <!-- Event Name and Date -->
-    <h2>
-        <?php echo $event_name ?>
-    </h2>
-    <h4>
-        <?php echo $event_date ?>
-    </h4>
+    <h2>Remove Guest</h2>
+    <h4><?php echo $event_name?></h4>
+    <h5><?php echo $event_date?></h5>
+    <br>
 
     <!-- EVENT TABLE LIST -->
     <div class="">
@@ -42,10 +39,11 @@
                 <col class="col-md-1">
                 <col class="col-md-1">
                 <col class="col-md-1">
-                <col class="col-md-3">
-                <col class="col-md-3">
+                <col class="col-md-2">
+                <col class="col-md-2">
                 <col class="col-md-1">
                 <col class="col-md-1">
+                <col class="col-md-3">
             </colgroup>
             <thead>
             <tr>
@@ -86,7 +84,7 @@
                 echo '<td>' . $row['product_name'] . '</td>';
                 echo '<td>' . $row['price'] . '</td>';
                 echo '<td>' . $row['quantity_purchased'] . '</td>';
-                echo '<td> <a href="' . $row['id'] . '">Remove '. $row['first_name'] . '</a><td>';
+                echo '<td> <a href="remove-guests/' . $row['id'] . '">Remove '. $row['first_name'] . '</a><td>';
                 echo '</tr>';
             }
 

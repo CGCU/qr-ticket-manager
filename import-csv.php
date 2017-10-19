@@ -90,7 +90,7 @@ if ( isset($_POST["submit"]) ) {
 
 <body>
 
-<?php echo_navbar(); ?>
+<?php echo_navbar($event_id); ?>
 
 <div class="container well white-bkg" style="margin-top: 60px; position: relative">
     <div class="container">
