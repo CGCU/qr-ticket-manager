@@ -57,7 +57,7 @@ if ( isset($_POST["submit"]) ) {
                 $stmt->close();
 
                 $count++;
-                $msg = 'Successfully imported ' . $count . ' attendees. Refresh the page to upload more.';
+                $msg = 'Successfully imported ' . $count . ' attendees. Click <a href="">here</a> to upload more (do not refresh).';
                 unset($stmt);
             }
 
