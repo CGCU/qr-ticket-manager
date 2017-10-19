@@ -33,6 +33,25 @@
         <?php echo $event_date ?>
     </h4>
 
+    <?php /* Query for counting number of event attendees */
+    $query = "SELECT SUM(quantity_purchased) AS sum FROM `qr_attendee` WHERE event_id = " . (string)$event_id;
+
+    /* prepare sql statement */
+    $stmt = $mysqli->prepare($query);
+
+    /* execute prepared statement */
+    $stmt->execute();
+
+    /* get result obj */
+    $result = $stmt->get_result();
+
+    $row = $result->fetch_assoc();
+        echo 'You have ' . $row['sum'] . ' attendees.';
+
+    $stmt->close();
+    unset($stmt);
+    ?>
+
     <!-- EVENT TABLE LIST -->
     <div class="">
         <table class="table table-striped">
