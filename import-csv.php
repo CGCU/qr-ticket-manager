@@ -31,7 +31,7 @@ if ( isset($_POST["submit"]) ) {
             for ($i = 1; $i < $num_rows; $i++) {
                 //TODO: multiple row input in one sql statement
                 /* Query for all attendees matching the event */
-                $query = "INSERT INTO `qr_attendee`(`event_id`, `year`, `date`, `cid`, `login`, `first_name`, `surname`, `email`, `product_name`, `price`, `quantity_purchased`, `quantity_collected`) VALUES($event_id, " . $csv_array[$i][0] . "," . "'2017-09-21'" . "," . (int)$csv_array[$i][3] . ",'" . $csv_array[$i][4] . "','" . $csv_array[$i][5] . "','" . $csv_array[$i][6] . "','" . $csv_array[$i][7] . "','" . $csv_array[$i][8] . "'," . (int)$csv_array[$i][9] . "," . (int)$csv_array[$i][10] . "," . 0 . ")";                //STR_TO_DATE(?, '%m/%d/%Y')
+                $query = "INSERT INTO `qr_attendee`(`event_id`, `year`, `date`, `cid`, `login`, `first_name`, `surname`, `email`, `product_name`, `price`, `quantity_purchased`, `quantity_collected`) VALUES($event_id, '" . $csv_array[$i][0] . "'," . "'2017-09-21'" . "," . (int)$csv_array[$i][3] . ",'" . $csv_array[$i][4] . "','" . $csv_array[$i][5] . "','" . $csv_array[$i][6] . "','" . $csv_array[$i][7] . "','" . $csv_array[$i][8] . "'," . (int)$csv_array[$i][9] . "," . (int)$csv_array[$i][10] . "," . 0 . ")";                //STR_TO_DATE(?, '%m/%d/%Y')
 
                 /* prepare sql statement */
                 $stmt = $mysqli->prepare($query);
@@ -57,7 +57,7 @@ if ( isset($_POST["submit"]) ) {
                 $stmt->close();
 
                 $count++;
-                $msg = 'Successfully imported ' . $count . 'attendees. Refresh the page to upload more.';
+                $msg = 'Successfully imported ' . $count . ' attendees. Refresh the page to upload more.';
                 unset($stmt);
             }
 
