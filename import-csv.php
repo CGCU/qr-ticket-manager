@@ -95,6 +95,8 @@ if ( isset($_POST["submit"]) ) {
 <div class="container well white-bkg" style="margin-top: 60px; position: relative">
     <div class="container">
         <h2>Import CSV from Union Shop Administration</h2>
+        <h4><?php echo $event_name?></h4>
+        <h5><?php echo $event_date?></h5>
         <br>
         <form action="/qr/event/<?php echo $event_id ?>/import-csv" method="post" enctype="multipart/form-data">
             <input type="file" name="file" id="file" /></td>
