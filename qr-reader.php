@@ -32,13 +32,15 @@
 
     <video id="preview"></video>
 
+    <br>
+    <span id="found"></span>
 </div>
 
 <?php echo_footer() ?>
 
 <?php echo_footer_scripts() ?>
 
-<script type="text/javascript" src="js/instascan.min.js"></script>
+<script type="text/javascript" src="/qr/js/instascan.min.js"></script>
 
 <script type="text/javascript">
     var scanner = new Instascan.Scanner({ video: document.getElementById('preview') });
@@ -56,7 +58,7 @@
     });
 
     function qrCodeFound(qr) {
-        console.log(qr);
+        window.location.href = "/qr/event/<?php echo $event_id ?>/on-the-night/qr-check/" + qr;
     }
 
 </script>
