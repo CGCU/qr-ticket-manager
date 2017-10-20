@@ -6,6 +6,17 @@
  * Time: 02:10
  */
 
+// Import PHPMailer classes into the global namespace
+// These must be at the top of your script, not inside a function
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+
+require 'lib/PHPMailer/src/Exception.php';
+require 'lib/PHPMailer/src/PHPMailer.php';
+require 'lib/PHPMailer/src/SMTP.php';
+
+
+
 //include 'lib/phpqrcode/qrlib.php';
 include 'lib/phpqrcode.php';
 
@@ -26,6 +37,38 @@ $src = 'data: '.mime_content_type($img_path).';base64,'.$imgData;
 
 /* Full img enclosed in html tags */
 $qr_html_img = '<img src="'.$src.'">';
+
+
+/* SEND EMAIL */
+
+$mail = new PHPMailer(true);
+try {
+    //Server settings
+    $mail->SMTPDebug = 2;                                 // Enable verbose debug output
+    $mail->isSMTP();                                      // Set mailer to use SMTP
+    $mail->Host = 'smtp.office365.com';  // Specify main and backup SMTP servers
+    $mail->SMTPAuth = true;                               // Enable SMTP authentication
+    $mail->Username = 'guilds@ic.ac.uk';                 // SMTP username
+    $mail->Password = '***REMOVED***';                           // SMTP password
+    $mail->SMTPSecure = 'tls';                            // Enable TLS encryption, `ssl` also accepted
+    $mail->Port = 587;                                    // TCP port to connect to
+
+    //Recipients
+    $mail->setFrom('guilds@imperial.ac.uk', 'City and Guilds College Union');
+    $mail->addAddress('vpfs@imperial.ac.uk');
+
+    //Content
+    $mail->isHTML(true);                                  // Set email format to HTML
+    $mail->Subject = 'Your Ticket to the CGCU Welcome Dinner';
+    $mail->Body    = 'This is the HTML message body <b>in bold!</b>';
+
+    $mail->send();
+    echo 'Message has been sent';
+
+} catch (Exception $e) {
+    echo 'Message could not be sent.';
+    echo 'Mailer Error: ' . $mail->ErrorInfo;
+}
 
 ?>
 <html>
@@ -50,7 +93,7 @@ $qr_html_img = '<img src="'.$src.'">';
     <li>Location: <a href="https://goo.gl/maps/k8MAJNSz7F52">Millennium Gloucester Hotel</a></li>
     <li>Time: Please arrive between 18:30 and 19:00. Don't be late otherwise you might out on your arrival drink!</li>
     <li>Dress Code: Black Tie</li>
-    <li>A cash/card bar with drinks at student prices, (although we would recommend bringing cash)</li>
+    <li>A cash/card bar with drinks is available with student prices (although we would recommend bringing cash)</li>
     <li>A free cloakroom is available all night (ladies you might want to bring flats as you won't be allowed bare foot on the dancefloor)</li>
     </ul>
 </p>
