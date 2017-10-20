@@ -45,10 +45,8 @@ $found = false;
 
 /* Assumes QR is unique */
 if ($row = $result->fetch_assoc()) {
-    /* TODO: check not already collected */
+    $attendee_first_name = $row['first_name'];
 
-    /* Get excited and allow collection */
-    $found = true;
     echo '<div class="">
         <table class="table table-striped">
             <colgroup>
@@ -81,7 +79,6 @@ if ($row = $result->fetch_assoc()) {
     echo '<td>' . $row['cid'] . '</td>';
     echo '<td>' . $row['login'] . '</td>';
     echo '<td>' . $row['first_name'] . '</td>';
-    $attendee_first_name = $row['first_name'];
     echo '<td>' . $row['surname'] . '</td>';
     echo '<td>' . $row['email'] . '</td>';
     echo '<td>' . $row['product_name'] . '</td>';
@@ -92,12 +89,20 @@ if ($row = $result->fetch_assoc()) {
     echo '            </tbody>
         </table>
     </div>';
-    echo "<h4 style='color: green;'>$attendee_first_name has been checked in!</h4>";
-    echo "<a href=\"/qr/event/$event_id/on-the-night/qr-check\" class=\"btn btn-primary\" role=\"button\">Back to Scanner</a>";
+
+    /* check not already collected too many */
+    if ($row['quantity_collected'] >= $row['quantity_purchased']) {
+        /* Already collected */
+        echo "<h4 style='color: red;'>$attendee_first_name has already collected all their tickets</h4>";
+    } else {
+        /* Get excited and allow collection */
+        $found = true;
+        echo "<h4 style='color: green;'>$attendee_first_name has been checked in!</h4>";
+    }
 } else {
     echo "<h4 style='color: red;'>No matching QR code found...</h4>";
-    echo "<a href=\"/qr/event/$event_id/on-the-night/qr-check\" class=\"btn btn-primary\" role=\"button\">Back to Scanner</a>";
 }
+echo "<a href=\"/qr/event/$event_id/on-the-night/qr-check\" class=\"btn btn-primary\" role=\"button\">Back to Scanner</a>";
 
 $stmt->close();
 unset($stmt);
