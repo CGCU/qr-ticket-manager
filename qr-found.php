@@ -45,6 +45,9 @@ $found = false;
 
 /* Assumes QR is unique */
 if ($row = $result->fetch_assoc()) {
+    /* TODO: check not already collected */
+
+    /* Get excited and allow collection */
     $found = true;
     echo '<div class="">
         <table class="table table-striped">
@@ -91,15 +94,27 @@ if ($row = $result->fetch_assoc()) {
     </div>';
     echo "<h4 style='color: green;'>$attendee_first_name has been checked in!</h4>";
     echo "<a href=\"/qr/event/$event_id/on-the-night/qr-check\" class=\"btn btn-primary\" role=\"button\">Back to Scanner</a>";
-
 } else {
     echo "<h4 style='color: red;'>No matching QR code found...</h4>";
     echo "<a href=\"/qr/event/$event_id/on-the-night/qr-check\" class=\"btn btn-primary\" role=\"button\">Back to Scanner</a>";
-
 }
 
 $stmt->close();
 unset($stmt);
+
+if ($found) {
+    /* Query to update quantity collected */
+    $query = "UPDATE qr_attendee SET quantity_collected = quantity_collected + 1 WHERE qr ='" . $qr_string . "'";
+
+    /* prepare sql statement */
+    $stmt = $mysqli->prepare($query);
+
+    /* execute prepared statement */
+    $stmt->execute();
+
+    $stmt->close();
+    unset($stmt);
+}
 
 ?>
 </div>
