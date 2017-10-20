@@ -48,7 +48,44 @@ while ($row = $result->fetch_assoc()) {
 
     echo '<br><span style="color: blue">Starting to send to attendee ' . $attendee_id . '</span><br>';
 
+    /* Generate QR Text */
+    //TODO: make more secure lol
     $qr_text = base64_encode($attendee_id . $event_name);
+
+    // ===============================================================================
+    /* Save QR Text */
+    // TODO: do this outside of this loop (decreases mysqli connections)
+    /* Open DB Connection */
+    /* Load databse config info */
+    $db_ini = parse_ini_file('not-public/database.ini');
+    $mysqli_qr = new mysqli($db_ini['server_name'],
+        $db_ini['db_user'],
+        $db_ini['db_password'],
+        $db_ini['db_name']
+    );
+    /* Delete database config info */
+    unset($db_ini);
+
+    /* check connection */
+    if (mysqli_connect_errno()) {
+        printf("Database connection failed: %s\n", mysqli_connect_error());
+        printf("Please email guilds@imperial.ac.uk!\n");
+        exit();
+    }
+
+    /* Query to update qr text */
+    $query_qr = "UPDATE qr_attendee SET qr = '$qr_text' WHERE id ='" . (string)$attendee_id . "'";
+
+    /* prepare sql statement */
+    $stmt_qr = $mysqli->prepare($query_qr);
+
+    /* execute prepared statement */
+    $stmt_qr->execute();
+
+    $stmt_qr->close();
+    $mysqli_qr->close();
+    /* END QR Text DB UPDATE */
+    // ===============================================================================
 
     /* Generate QR Code */
     QRcode::png($qr_text, $temp_file); // creates file
