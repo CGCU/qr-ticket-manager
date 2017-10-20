@@ -102,7 +102,8 @@ if ($row = $result->fetch_assoc()) {
 } else {
     echo "<h4 style='color: red;'>No matching QR code found...</h4>";
 }
-echo "<a href=\"/qr/event/$event_id/on-the-night/qr-check\" class=\"btn btn-primary\" role=\"button\">Back to Scanner</a>";
+echo "<a href=\"/qr/event/$event_id/on-the-night/qr-check\" class=\"btn btn-primary\" role=\"button\">Back to Scanner</a>    ";
+echo "<a style='padding-left: 10px' href=\"/qr/event/$event_id/on-the-night/\" class=\"btn btn-info\" role=\"button\">Back to collection list</a>";
 
 $stmt->close();
 unset($stmt);

@@ -160,13 +160,13 @@ while ($row = $result->fetch_assoc()) {
         $mail->Body    = $html;
 
         $mail->send();
-        echo '<br><span style="color: blue">Message has been sent to attendee ' . $attendee_id . '</span><br>';
+        $count++;
+        echo '<br><span style="color: blue">Message has been sent to attendee ' . $attendee_id . ' Sent' . $count . ' emails so far.</span><br>';
 
     } catch (Exception $e) {
         echo '<br><span style="color: red">Message could not be sent.</span><br>';
         echo '<span style="color: red">Mailer Error: ' . $mail->ErrorInfo . '</span><br>';
     }
-    $count++;
     sleep(1);
 }
 
