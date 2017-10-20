@@ -142,7 +142,7 @@ while ($row = $result->fetch_assoc()) {
     try {
         //Server settings
         $mail->SMTPDebug = 2;                                 // Enable verbose debug output
-        $mail->isSMTP();                                      // Set mailer to use SMTP
+        //$mail->isSMTP();                                      // Set mailer to use SMTP
         $mail->Host = 'smtp.office365.com';  // Specify main and backup SMTP servers
         $mail->SMTPAuth = true;                               // Enable SMTP authentication
         $mail->Username = 'guilds@ic.ac.uk';                 // SMTP username
@@ -161,7 +161,7 @@ while ($row = $result->fetch_assoc()) {
 
         $mail->send();
         $count++;
-        echo '<br><span style="color: blue">Message has been sent to attendee ' . $attendee_id . ' Sent' . $count . ' emails so far.</span><br>';
+        echo '<br><span style="color: blue">Message has been sent to attendee ' . $attendee_id . '. Sent ' . $count . ' emails so far.</span><br>';
 
     } catch (Exception $e) {
         echo '<br><span style="color: red">Message could not be sent.</span><br>';
