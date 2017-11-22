@@ -146,7 +146,7 @@ while ($row = $result->fetch_assoc()) {
         $mail->Host = 'smtp.office365.com';  // Specify main and backup SMTP servers
         $mail->SMTPAuth = true;                               // Enable SMTP authentication
         $mail->Username = 'guilds@ic.ac.uk';                 // SMTP username
-        $mail->Password = '***REMOVED***';                           // SMTP password
+        $mail->Password = '**REDACTED**';                           // SMTP password
         $mail->SMTPSecure = 'tls';                            // Enable TLS encryption, `ssl` also accepted
         $mail->Port = 587;                                    // TCP port to connect to
 
