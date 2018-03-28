@@ -9,95 +9,69 @@
 session_start();
 session_destroy();
 session_start();
+
 /* Initialise all strings to the empty string */
 $username = $password = $err = '';
-//$correct_password_hash = '$2y$10$/.E5UEd5JtnaC02Pvw6L1.mOf2VDcDtmWrqs9DDdvK3/fsHBWMBeW';
-//$correctUsername = 'guilds';
 
 if(isset($_POST['sub'])) {
 
     $username = $_POST['username'];
     $password = $_POST['password'];
 
-    /* Open DB Connection */
+    /* If correct password, allow entry
+     * (union ldap auth functions at dougal.union.ic.ac.uk/sysadmin) */
+    if(pam_auth($username, $password)) {
 
-    /* Load databse config info */
-    $db_ini = parse_ini_file('not-public/database.ini');
-    $mysqli = new mysqli($db_ini['server_name'],
-        $db_ini['db_user'],
-        $db_ini['db_password'],
-        $db_ini['db_name']
-    );
-    /* Delete database config info */
-    unset($db_ini);
+        $_SESSION['loggedIn'] = true;
+        $_SESSION['username'] = $username;
 
-    /* check connection */
-    if (mysqli_connect_errno()) {
-        printf("Database connection failed: %s\n", mysqli_connect_error());
-        printf("Please email guilds@imperial.ac.uk!\n");
-        exit();
-    }
 
-    //TODO: SQL INJECTION STOP
 
-    /* Query finds if username is in db */
-    $query = "SELECT * FROM qr_users WHERE username = '" . $username . "'";
+        /* Load databse config info */
+        $db_ini = parse_ini_file('not-public/database.ini');
+        $mysqli = new mysqli($db_ini['server_name'],
+            $db_ini['db_user'],
+            $db_ini['db_password'],
+            $db_ini['db_name']
+        );
+        /* Delete database config info */
+        unset($db_ini);
 
-    /* prepare sql statement */
-    $stmt = $mysqli->prepare($query);
-
-    /* execute prepared statement */
-    $stmt->execute();
-
-    /* get result obj */
-    $result = $stmt->get_result();
-
-    /* If there's a row present, one row should be present and it should contain the username */
-    $num_rows = $result->num_rows;
-    if($num_rows != 0) {
-        /* Error check: if more than one row something is wrong */
-        if ($num_rows > 1) {
-            printf("Error on login script: more than one username row\n");
-            printf("Please email guilds@imperial.ac.uk\n");
-            $stmt->close();
-            $mysqli->close();
-            die();
+        /* check connection */
+        if (mysqli_connect_errno()) {
+            printf("Database connection failed: %s\n", mysqli_connect_error());
+            printf("Please email guilds@imperial.ac.uk!\n");
+            exit();
         }
 
-        /* Get Row */
-        $row = $result->fetch_assoc();
+        //TODO: SQL INJECTION STOP
 
-        /* Error Check: if username isnt the one we're expecting */
-        if ($row['username'] !== $username) {
-            printf("Error on login script: username != username\n");
-            printf("Please email guilds@imperial.ac.uk\n");
-            $stmt->close();
-            $mysqli->close();
-            die();
-        }
+        $username = $mysqli->real_escape_string($username);
 
-        /* If correct password, allow entry */
-        if(password_verify($password, $row['password_hash'])) {
-            /* Close db connections */
-            $stmt->close();
-            $mysqli->close();
+        // Add user to database if not there
+        $query = 'INSERT IGNORE INTO `qr_users` (`username`) VALUES (?)';
 
-            $_SESSION['loggedIn'] = true;
-            $_SESSION['username'] = $username;
-            header('LOCATION:index.php');
-            die();
+        /* prepare sql statement */
+        $stmt = $mysqli->prepare($query);
 
-        } else {
-            $err = 'Your username or password is incorrect. Please try again!';
-        }
+        $stmt->bind_param("s", $username);
+
+        /* execute prepared statement */
+        $stmt->execute();
+
+        /* Close db connections */
+        $stmt->close();
+        $mysqli->close();
+
+        /* Redirect to logged in page */
+        header('LOCATION:index.php');
+        die();
 
     } else {
+        unset($password);
+        unset($_POST['password']);
         $err = 'Your username or password is incorrect. Please try again!';
     }
-
-    /* Close db connections */
-    $stmt->close();
-    $mysqli->close();
 
 }
 
@@ -161,14 +135,14 @@ if(isset($_POST['sub'])) {
         }
     </style>
 
-    <title>CGCU Admin Login</title>
+    <title>CGCU QR System Login</title>
 
 </head>
 
 <body>
 
 <form name='form-signin' class="form-signin" action='<?php echo $_SERVER['PHP_SELF'];?>' method='post'>
-    <h2 class="form-signin-heading">CGCU QR Ticket System</h2>
+    <h2 class="form-signin-heading">CGCU QR Ticket System - CSP Login</h2>
     <label for='username'></label>
     <input type='text' value='<?php echo $username;?>' id='username' class="form-control" name='username' placeholder="Username" required autofocus />
     <label for='password'></label>
