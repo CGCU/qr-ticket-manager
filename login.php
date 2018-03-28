@@ -20,11 +20,10 @@ if(isset($_POST['sub'])) {
 
     /* If correct password, allow entry
      * (union ldap auth functions at dougal.union.ic.ac.uk/sysadmin) */
-    if(pam_auth($username, $password)) {
+    if (pam_auth($username, $password)) {
 
         $_SESSION['loggedIn'] = true;
         $_SESSION['username'] = $username;
-
 
 
         /* Load databse config info */
@@ -68,12 +67,25 @@ if(isset($_POST['sub'])) {
         die();
 
     } else {
+
+        /* TODO: Temporary while pam_auth is fixed by sysadmin */
+        $correct_password_hash = '$2y$10$/.E5UEd5JtnaC02Pvw6L1.mOf2VDcDtmWrqs9DDdvK3/fsHBWMBeW';
+        $correct_username = 'guilds';
+        /* If correct password, allow entry */
+        if ($username === $correct_username && password_verify($password, $correct_password_hash)) {
+            $_SESSION['loggedIn'] = true;
+            $_SESSION['username'] = $username;
+            header('LOCATION:index.php');
+            die();
+        }
+        /* End Temporary */
+
         unset($password);
         unset($_POST['password']);
         $err = 'Your username or password is incorrect. Please try again!';
     }
-
 }
+
 
 ?>
 
