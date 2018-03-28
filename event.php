@@ -33,6 +33,7 @@ if (isset($_GET['params'])) {
     /* Delete database config info */
     unset($db_ini);
 
+    //TODO: Don't print mysqli error, set up logging
     /* check connection */
     if (mysqli_connect_errno()) {
         printf("Database connection failed: %s\n", mysqli_connect_error());
