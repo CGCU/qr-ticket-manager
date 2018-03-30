@@ -17,12 +17,18 @@ Fix with http://php.net/manual/en/mysqli.quickstart.prepared-statements.php
     * Including QR code bug fix (PDF or embed image or both)
     * https://github.com/dompdf/dompdf
     * send tickets in the background, with progress bar
+3. don't add duplicates in upload csv / add guest
 3. Add guest manually
-3. Remove guest manually 
+3. Session Time Limit
+    * https://solutionfactor.net/blog/2014/02/08/implementing-session-timeout-with-php/
 3. Plus1 solver
     * facility to allow two codes to be sent to the same person
     * facility for club email to get the +1's details to allocate tickets
 3. CSP Side ticket swapping 
 3. Ticket Holder ticket swapping
+3. Cross reference with membership list
+    * Via CSV or via eActivities API
 3. iOS Scanner app
 3. pull attendees / events from eActivities 
+3. use lumen?
+    * https://lumen.laravel.com/
